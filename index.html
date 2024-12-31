@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Image Generator | Saif's AI</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Vue.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div id="app">
+        <nav class="navbar">
+            <div class="logo">
+                <a href="https://saifs.ai" target="_blank">
+                    <i class="fas fa-brain"></i> Saif's AI
+                </a>
+            </div>
+            <div class="nav-links">
+                <a href="https://saifs.ai" target="_blank">Visit Our Website</a>
+            </div>
+        </nav>
+
+        <main class="container">
+            <h1 class="title">AI Image Generator</h1>
+            <p class="subtitle">Transform your ideas into stunning visuals with AI</p>
+
+            <div class="generator-container">
+                <div class="input-section">
+                    <textarea 
+                        v-model="prompt"
+                        placeholder="Describe the image you want to generate..."
+                        @keyup="updateCharCount"
+                    ></textarea>
+                    <div class="char-count">{{ remainingChars }} characters remaining</div>
+                    
+                    <div class="options">
+                        <select v-model="selectedStyle">
+                            <option value="realistic">Realistic</option>
+                            <option value="artistic">Artistic</option>
+                            <option value="cartoon">Cartoon</option>
+                            <option value="abstract">Abstract</option>
+                        </select>
+
+                        <select v-model="selectedSize">
+                            <option value="small">Small (256x256)</option>
+                            <option value="medium">Medium (512x512)</option>
+                            <option value="large">Large (1024x1024)</option>
+                        </select>
+                    </div>
+
+                    <button 
+                        @click="generateImage" 
+                        :disabled="!prompt || isGenerating"
+                        :class="{ 'generating': isGenerating }"
+                    >
+                        <i class="fas fa-magic"></i>
+                        {{ isGenerating ? 'Generating...' : 'Generate Image' }}
+                    </button>
+                </div>
+
+                <div class="preview-section">
+                    <div class="preview-container" :class="{ 'has-image': generatedImage }">
+                        <template v-if="generatedImage">
+                            <img :src="generatedImage" alt="Generated Image">
+                            <div class="image-actions">
+                                <button @click="downloadImage">
+                                    <i class="fas fa-download"></i> Download
+                                </button>
+                                <button @click="shareImage">
+                                    <i class="fas fa-share"></i> Share
+                                </button>
+                            </div>
+                        </template>
+                        <div v-else class="placeholder">
+                            <i class="fas fa-image"></i>
+                            <p>Your generated image will appear here</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Created with ❤️ by <a href="https://saifs.ai" target="_blank">Saif's AI</a></p>
+            <p>Experience more AI solutions at <a href="https://saifs.ai" target="_blank">saifs.ai</a></p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html> 
